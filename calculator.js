@@ -1,18 +1,40 @@
 let currentExpression = '';
 const display = document.getElementById('display');
 
-// This scope object will hold our variables and their default values.
 let scope = {
     x: 0,
     y: 0
 };
 
+// A mapping for converting numbers to their superscript Unicode characters
+const superscriptMap = {
+    '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴',
+    '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹'
+};
+
+// This function takes the standard expression and formats it for the display
+function formatForDisplay(expression) {
+    // A regular expression to find any number (one or more digits) that follows a caret (^)
+    return expression.replace(/\^(\d+)/g, (match, p1) => {
+        // p1 contains the number(s) after the caret
+        let formattedExponent = '';
+        for (let i = 0; i < p1.length; i++) {
+            const digit = p1[i];
+            formattedExponent += superscriptMap[digit] || digit;
+        }
+        return formattedExponent;
+    });
+}
+
 function addToDisplay(value) {
     if (display.textContent === '0' && value !== '.') {
-        display.textContent = '';
+        currentExpression = '';
     }
+    
     currentExpression += value;
-    display.textContent = currentExpression;
+    
+    // Format the current expression and then update the display
+    display.textContent = formatForDisplay(currentExpression);
 }
 
 function clearDisplay() {
@@ -25,7 +47,6 @@ function calculateResult() {
         let result;
         const expression = currentExpression.trim();
 
-        // Check for variable assignment first
         const equalsIndex = expression.indexOf('=');
         if (equalsIndex !== -1) {
             const assignment = expression.substring(0, equalsIndex).trim();
@@ -36,26 +57,19 @@ function calculateResult() {
             return;
         }
 
-        // Check if the expression contains a division or other symbolic operation
         if (expression.includes('/')) {
-            // Use math.rationalize() for symbolic polynomial division
-            // We pass the scope to handle any defined variables
             const simplifiedNode = math.rationalize(expression, scope, true);
             
-            // Check if the result is a simplified polynomial (denominator is 1 or a constant)
             if (simplifiedNode.denominator.isConstantNode && simplifiedNode.denominator.value === 1) {
-                // If the denominator is 1, it's a clean polynomial result.
                 result = simplifiedNode.numerator.toString();
             } else {
-                // Otherwise, it's still a fraction or a complex expression, so display it as is.
                 result = simplifiedNode.expression.toString();
             }
         } else {
-            // For all other expressions, use the standard evaluate()
             result = math.evaluate(expression, scope);
         }
 
-        display.textContent = result;
+        display.textContent = formatForDisplay(String(result));
         currentExpression = String(result);
 
     } catch (e) {

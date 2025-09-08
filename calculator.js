@@ -35,6 +35,18 @@ function addToDisplay(value) {
     display.textContent = formatForDisplay(currentExpression);
 }
 
+function deleteLast() {
+    // Check if the current expression is not empty or is not '0'
+    if (currentExpression.length > 0 && currentExpression !== '0') {
+        currentExpression = currentExpression.slice(0, -1);
+        if (currentExpression.length === 0) {
+            display.textContent = '0';
+        } else {
+            display.textContent = formatForDisplay(currentExpression);
+        }
+    }
+}
+
 function clearDisplay() {
     currentExpression = '';
     display.textContent = '0';
@@ -51,8 +63,6 @@ function calculateResult() {
 
         let result;
         
-        // First, try to evaluate the expression numerically.
-        // This will work for any expression with only numbers and operators.
         result = math.evaluate(expression);
         
         display.textContent = formatForDisplay(String(result));
@@ -60,8 +70,6 @@ function calculateResult() {
         isResultDisplayed = true;
     
     } catch (e) {
-        // If the numerical evaluation fails (e.g., because there's a variable),
-        // we then try to simplify it symbolically.
         try {
             const parsedExpression = math.parse(currentExpression);
             const simplifiedExpression = math.simplify(parsedExpression);
@@ -72,7 +80,6 @@ function calculateResult() {
             isResultDisplayed = true;
 
         } catch (symbolicError) {
-            // If both fail, it's an invalid expression.
             display.textContent = 'Error';
             currentExpression = '';
             isResultDisplayed = false;

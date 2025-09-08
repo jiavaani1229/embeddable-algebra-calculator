@@ -5,8 +5,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    /* Updated font-family for a cleaner, modern look */
-    font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; 
+    font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     color: #333;
 }
 
@@ -25,8 +24,7 @@ body {
     padding: 20px;
     text-align: right;
     font-size: 2.5em;
-    /* Lighter font-weight for the display */
-    font-weight: 200; 
+    font-weight: 200;
     margin-bottom: 20px;
     overflow-x: auto;
     color: #2c5890;
@@ -42,22 +40,19 @@ button {
     border: none;
     background-color: #f0f8ff;
     color: #4a7ab7;
-    font-size: 1.5em;
-    /* Lighter font-weight for buttons */
-    font-weight: 400; 
-    padding: 20px;
-    /* Increased border-radius for much rounder buttons */
-    border-radius: 50px; /* Makes them pill-shaped or nearly circular depending on padding */
+    font-size: 1.2em; /* Adjusted font size */
+    font-weight: 400;
+    padding: 15px; /* Adjusted padding */
+    border-radius: 50px;
     cursor: pointer;
-    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s; /* Added box-shadow transition */
-    /* Optional: subtle shadow for button depth */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 button:hover {
     background-color: #dbeaff;
     color: #2c5890;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1); /* Slightly more pronounced shadow on hover */
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
 
 .operator, .equals {
@@ -86,4 +81,21 @@ button:hover {
 }
 
 .variable:hover {
-    background-
+    background-color: #85badf;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.clear {
+    background-color: #ff9191;
+    color: #ffffff;
+    grid-column: span 1;
+}
+
+.clear:hover {
+    background-color: #e07f7f;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.equals {
+    grid-column: span 2;
+}

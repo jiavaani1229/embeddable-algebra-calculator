@@ -59,10 +59,28 @@ button:hover {
     background-color: #357bd9;
 }
 
+.function {
+    background-color: #ff9f43; /* Orange for functions */
+    color: #ffffff;
+}
+
+.function:hover {
+    background-color: #e58a3d;
+}
+
+.variable {
+    background-color: #6a89cc; /* A purple/blue for variables */
+    color: #ffffff;
+}
+
+.variable:hover {
+    background-color: #5d75b3;
+}
+
 .clear {
     background-color: #ff6b6b; /* A nice red */
     color: #ffffff;
-    grid-column: span 2;
+    grid-column: span 1;
 }
 
 .clear:hover {

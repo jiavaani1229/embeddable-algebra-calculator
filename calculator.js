@@ -1,8 +1,6 @@
 let currentExpression = '';
 const display = document.getElementById('display');
-
-// No need for a scope object with default values if we are doing symbolic manipulation
-// The math.js library can handle undefined variables in symbolic mode.
+let isResultDisplayed = false; // New variable to track if a result is on the screen
 
 const superscriptMap = {
     '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴',
@@ -21,6 +19,17 @@ function formatForDisplay(expression) {
 }
 
 function addToDisplay(value) {
+    // If a result is currently displayed and the user types a number,
+    // we clear the expression to start a new calculation.
+    if (isResultDisplayed && /[0-9]/.test(value)) {
+        currentExpression = '';
+        isResultDisplayed = false;
+    } else if (isResultDisplayed && /[-+*/^]/.test(value)) {
+        // If an operator is pressed after a result, we just continue the calculation.
+        isResultDisplayed = false;
+    }
+    
+    // Clear the initial '0' if it's there
     if (display.textContent === '0' && value !== '.') {
         currentExpression = '';
     }
@@ -33,32 +42,35 @@ function addToDisplay(value) {
 function clearDisplay() {
     currentExpression = '';
     display.textContent = '0';
+    isResultDisplayed = false; // Reset the flag
 }
 
 function calculateResult() {
     try {
         const expression = currentExpression.trim();
 
-        // Check if the expression contains any letters (variables)
-        const hasVariables = /[a-zA-Z]/.test(expression);
+        // Prevent evaluation of an empty string
+        if (expression === '') {
+            return;
+        }
 
+        const hasVariables = /[a-zA-Z]/.test(expression);
         let result;
+        
         if (hasVariables) {
-            // For symbolic expressions, we use the math.js parser to create a symbolic node.
-            // Then, we simplify it. This is what Symbolab does.
             const parsedExpression = math.parse(expression);
             result = math.simplify(parsedExpression).toString();
         } else {
-            // For purely numerical expressions, we use evaluate()
             result = math.evaluate(expression);
         }
         
         display.textContent = formatForDisplay(String(result));
         currentExpression = String(result);
+        isResultDisplayed = true; // Set the flag after a successful calculation
 
     } catch (e) {
-        // If there's any error, such as a syntax error, show "Error"
         display.textContent = 'Error';
         currentExpression = '';
+        isResultDisplayed = false;
     }
 }

@@ -1,24 +1,26 @@
 body {
-    background-color: #f7f6f3;
+    /* Keeping the background subtle, similar to Notion's canvas */
+    background-color: #f8f8f8; 
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #333; /* Default text color */
 }
 
 .calculator-container {
-    background-color: #ffffff;
+    background-color: #ffffff; /* Clean white background for the calculator itself */
     border: 1px solid #e0e0e0;
     border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Slightly softer shadow */
     padding: 20px;
     width: 320px;
 }
 
 .display-screen {
-    background-color: #f1f1f1;
+    background-color: #e6f2ff; /* A very light blue, like the subtle tones in your banner */
     border-radius: 8px;
     padding: 20px;
     text-align: right;
@@ -26,6 +28,7 @@ body {
     font-weight: 300;
     margin-bottom: 20px;
     overflow-x: auto;
+    color: #2c5890; /* Darker blue for display text */
 }
 
 .buttons-grid {
@@ -36,53 +39,3 @@ body {
 
 button {
     border: none;
-    background-color: #e8e8e8;
-    color: #333;
-    font-size: 1.5em;
-    font-weight: 500;
-    padding: 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-button:hover {
-    background-color: #d1d1d1;
-}
-
-.operator, .equals {
-    background-color: #4a90e2;
-    color: #ffffff;
-}
-
-.operator:hover, .equals:hover {
-    background-color: #357bd9;
-}
-
-.function {
-    background-color: #ff9f43;
-    color: #ffffff;
-}
-
-.function:hover {
-    background-color: #e58a3d;
-}
-
-.variable {
-    background-color: #6a89cc;
-    color: #ffffff;
-}
-
-.variable:hover {
-    background-color: #5d75b3;
-}
-
-.clear {
-    background-color: #ff6b6b;
-    color: #ffffff;
-    grid-column: span 1;
-}
-
-.clear:hover {
-    background-color: #e55a5a;
-}

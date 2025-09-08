@@ -1,26 +1,25 @@
 body {
-    /* Keeping the background subtle, similar to Notion's canvas */
-    background-color: #f8f8f8; 
+    background-color: #f8f8f8;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    color: #333; /* Default text color */
+    color: #333;
 }
 
 .calculator-container {
-    background-color: #ffffff; /* Clean white background for the calculator itself */
+    background-color: #ffffff;
     border: 1px solid #e0e0e0;
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Slightly softer shadow */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
     padding: 20px;
     width: 320px;
 }
 
 .display-screen {
-    background-color: #e6f2ff; /* A very light blue, like the subtle tones in your banner */
+    background-color: #e6f2ff;
     border-radius: 8px;
     padding: 20px;
     text-align: right;
@@ -28,14 +27,69 @@ body {
     font-weight: 300;
     margin-bottom: 20px;
     overflow-x: auto;
-    color: #2c5890; /* Darker blue for display text */
+    color: #2c5890;
 }
 
 .buttons-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr); /* Changed to 4 columns */
     gap: 12px;
 }
 
 button {
     border: none;
+    background-color: #f0f8ff;
+    color: #4a7ab7;
+    font-size: 1.5em;
+    font-weight: 500;
+    padding: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+button:hover {
+    background-color: #dbeaff;
+    color: #2c5890;
+}
+
+.operator, .equals {
+    background-color: #6a9ee8;
+    color: #ffffff;
+}
+
+.operator:hover, .equals:hover {
+    background-color: #5587d1;
+}
+
+.function {
+    background-color: #a4c5f9;
+    color: #ffffff;
+}
+
+.function:hover {
+    background-color: #8fb0e0;
+}
+
+.variable {
+    background-color: #9cd4ff;
+    color: #ffffff;
+}
+
+.variable:hover {
+    background-color: #85badf;
+}
+
+.clear {
+    background-color: #ff9191;
+    color: #ffffff;
+    grid-column: span 1;
+}
+
+.clear:hover {
+    background-color: #e07f7f;
+}
+
+.equals {
+    grid-column: span 2; /* Making the equals button span two columns for a cleaner look */
+}

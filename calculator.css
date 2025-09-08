@@ -1,5 +1,5 @@
 body {
-    background-color: #f7f6f3; /* Notion's light gray background */
+    background-color: #f7f6f3;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -51,7 +51,7 @@ button:hover {
 }
 
 .operator, .equals {
-    background-color: #4a90e2; /* A nice blue */
+    background-color: #4a90e2;
     color: #ffffff;
 }
 
@@ -60,7 +60,7 @@ button:hover {
 }
 
 .function {
-    background-color: #ff9f43; /* Orange for functions */
+    background-color: #ff9f43;
     color: #ffffff;
 }
 
@@ -69,7 +69,7 @@ button:hover {
 }
 
 .variable {
-    background-color: #6a89cc; /* A purple/blue for variables */
+    background-color: #6a89cc;
     color: #ffffff;
 }
 
@@ -78,7 +78,7 @@ button:hover {
 }
 
 .clear {
-    background-color: #ff6b6b; /* A nice red */
+    background-color: #ff6b6b;
     color: #ffffff;
     grid-column: span 1;
 }

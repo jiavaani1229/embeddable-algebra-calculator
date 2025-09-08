@@ -1,6 +1,6 @@
 let currentExpression = '';
 const display = document.getElementById('display');
-let isResultDisplayed = false; // New variable to track if a result is on the screen
+let isResultDisplayed = false;
 
 const superscriptMap = {
     '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴',
@@ -19,17 +19,13 @@ function formatForDisplay(expression) {
 }
 
 function addToDisplay(value) {
-    // If a result is currently displayed and the user types a number,
-    // we clear the expression to start a new calculation.
-    if (isResultDisplayed && /[0-9]/.test(value)) {
+    if (isResultDisplayed && /[0-9x-z.e]/.test(value)) {
         currentExpression = '';
         isResultDisplayed = false;
     } else if (isResultDisplayed && /[-+*/^]/.test(value)) {
-        // If an operator is pressed after a result, we just continue the calculation.
         isResultDisplayed = false;
     }
-    
-    // Clear the initial '0' if it's there
+
     if (display.textContent === '0' && value !== '.') {
         currentExpression = '';
     }
@@ -42,35 +38,44 @@ function addToDisplay(value) {
 function clearDisplay() {
     currentExpression = '';
     display.textContent = '0';
-    isResultDisplayed = false; // Reset the flag
+    isResultDisplayed = false;
 }
 
 function calculateResult() {
     try {
         const expression = currentExpression.trim();
 
-        // Prevent evaluation of an empty string
         if (expression === '') {
             return;
         }
 
-        const hasVariables = /[a-zA-Z]/.test(expression);
         let result;
         
-        if (hasVariables) {
-            const parsedExpression = math.parse(expression);
-            result = math.simplify(parsedExpression).toString();
-        } else {
-            result = math.evaluate(expression);
-        }
+        // First, try to evaluate the expression numerically.
+        // This will work for any expression with only numbers and operators.
+        result = math.evaluate(expression);
         
         display.textContent = formatForDisplay(String(result));
         currentExpression = String(result);
-        isResultDisplayed = true; // Set the flag after a successful calculation
-
+        isResultDisplayed = true;
+    
     } catch (e) {
-        display.textContent = 'Error';
-        currentExpression = '';
-        isResultDisplayed = false;
+        // If the numerical evaluation fails (e.g., because there's a variable),
+        // we then try to simplify it symbolically.
+        try {
+            const parsedExpression = math.parse(currentExpression);
+            const simplifiedExpression = math.simplify(parsedExpression);
+            const result = simplifiedExpression.toString();
+            
+            display.textContent = formatForDisplay(result);
+            currentExpression = result;
+            isResultDisplayed = true;
+
+        } catch (symbolicError) {
+            // If both fail, it's an invalid expression.
+            display.textContent = 'Error';
+            currentExpression = '';
+            isResultDisplayed = false;
+        }
     }
 }

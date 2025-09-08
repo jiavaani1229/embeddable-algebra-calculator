@@ -40,19 +40,19 @@ button {
     border: none;
     background-color: #f0f8ff;
     color: #4a7ab7;
-    font-size: 1.2em; /* Adjusted font size */
+    font-size: 1.2em;
     font-weight: 400;
-    padding: 15px; /* Adjusted padding */
+    padding: 15px;
     border-radius: 50px;
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 button:hover {
     background-color: #dbeaff;
     color: #2c5890;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 .operator, .equals {
@@ -62,7 +62,7 @@ button:hover {
 
 .operator:hover, .equals:hover {
     background-color: #5587d1;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 .function {
@@ -72,7 +72,7 @@ button:hover {
 
 .function:hover {
     background-color: #8fb0e0;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 .variable {
@@ -82,18 +82,17 @@ button:hover {
 
 .variable:hover {
     background-color: #85badf;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
-.clear {
+.clear, .long-clear {
     background-color: #ff9191;
     color: #ffffff;
-    grid-column: span 1;
 }
 
-.clear:hover {
+.clear:hover, .long-clear:hover {
     background-color: #e07f7f;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 .equals {

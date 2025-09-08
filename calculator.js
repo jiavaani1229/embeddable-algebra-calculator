@@ -2,10 +2,9 @@ let currentExpression = '';
 const display = document.getElementById('display');
 
 // This scope object will hold our variables and their default values.
-// We'll reset it to its default state each time a calculation is made.
 let scope = {
-  x: 0,
-  y: 0
+    x: 0,
+    y: 0
 };
 
 function addToDisplay(value) {
@@ -23,28 +22,42 @@ function clearDisplay() {
 
 function calculateResult() {
     try {
-        // Use a regular expression to find any variables in the expression.
-        const variableMatch = currentExpression.match(/[a-zA-Z]/g);
+        let result;
+        const expression = currentExpression.trim();
 
-        // If variables are found, update their values in the scope.
-        // For this simple calculator, we'll assume any new variable
-        // is meant to be set with a value from the user's input.
-        // A more advanced approach would involve parsing equations,
-        // but this will handle simple cases like "x=5"
-        const equalsIndex = currentExpression.indexOf('=');
+        // Check for variable assignment first
+        const equalsIndex = expression.indexOf('=');
         if (equalsIndex !== -1) {
-            const assignment = currentExpression.substring(0, equalsIndex).trim();
-            const value = currentExpression.substring(equalsIndex + 1).trim();
+            const assignment = expression.substring(0, equalsIndex).trim();
+            const value = expression.substring(equalsIndex + 1).trim();
             scope[assignment] = math.evaluate(value, scope);
             display.textContent = `${assignment} = ${scope[assignment]}`;
             currentExpression = '';
             return;
         }
 
-        // Pass the scope to math.evaluate()
-        const result = math.evaluate(currentExpression, scope);
+        // Check if the expression contains a division or other symbolic operation
+        if (expression.includes('/')) {
+            // Use math.rationalize() for symbolic polynomial division
+            // We pass the scope to handle any defined variables
+            const simplifiedNode = math.rationalize(expression, scope, true);
+            
+            // Check if the result is a simplified polynomial (denominator is 1 or a constant)
+            if (simplifiedNode.denominator.isConstantNode && simplifiedNode.denominator.value === 1) {
+                // If the denominator is 1, it's a clean polynomial result.
+                result = simplifiedNode.numerator.toString();
+            } else {
+                // Otherwise, it's still a fraction or a complex expression, so display it as is.
+                result = simplifiedNode.expression.toString();
+            }
+        } else {
+            // For all other expressions, use the standard evaluate()
+            result = math.evaluate(expression, scope);
+        }
+
         display.textContent = result;
         currentExpression = String(result);
+
     } catch (e) {
         display.textContent = 'Error';
         currentExpression = '';

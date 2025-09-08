@@ -1,100 +1,58 @@
-body {
-    background-color: #f8f8f8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-    color: #333;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notion Calculator</title>
+    <link rel="stylesheet" href="calculator.css">
+</head>
+<body>
 
-.calculator-container {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-    padding: 20px;
-    width: 320px;
-}
+    <div class="calculator-container">
+        <div class="display-screen" id="display">0</div>
+        
+        <div class="buttons-grid">
+            <button class="clear" onclick="clearDisplay()">AC</button>
+            <button class="long-clear" onclick="deleteLast()">⌫</button>
+            <button class="variable" onclick="addToDisplay('x')">x</button>
+            <button class="variable" onclick="addToDisplay('y')">y</button>
+            <button class="operator" onclick="addToDisplay('/')">÷</button>
 
-.display-screen {
-    background-color: #e6f2ff;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: right;
-    font-size: 2.5em;
-    font-weight: 200;
-    margin-bottom: 20px;
-    overflow-x: auto;
-    color: #2c5890;
-}
+            <button class="function" onclick="addToDisplay('sin(')">sin</button>
+            <button class="function" onclick="addToDisplay('cos(')">cos</button>
+            <button class="function" onclick="addToDisplay('tan(')">tan</button>
+            <button class="operator" onclick="addToDisplay('*')">×</button>
 
-.buttons-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-}
+            <button class="function" onclick="addToDisplay('log(')">log</button>
+            <button class="function" onclick="addToDisplay('sqrt(')">sqrt</button>
+            <button class="operator" onclick="addToDisplay('^')">^</button>
+            <button class="operator" onclick="addToDisplay('-')">-</button>
 
-button {
-    border: none;
-    background-color: #f0f8ff;
-    color: #4a7ab7;
-    font-size: 1.2em;
-    font-weight: 400;
-    padding: 15px;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
+            <button onclick="addToDisplay('7')">7</button>
+            <button onclick="addToDisplay('8')">8</button>
+            <button onclick="addToDisplay('9')">9</button>
+            <button class="operator" onclick="addToDisplay('+')">+</button>
 
-button:hover {
-    background-color: #dbeaff;
-    color: #2c5890;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-}
+            <button onclick="addToDisplay('4')">4</button>
+            <button onclick="addToDisplay('5')">5</button>
+            <button onclick="addToDisplay('6')">6</button>
+            <button class="variable" onclick="addToDisplay('pi')">π</button>
 
-.operator, .equals {
-    background-color: #6a9ee8;
-    color: #ffffff;
-}
+            <button onclick="addToDisplay('1')">1</button>
+            <button onclick="addToDisplay('2')">2</button>
+            <button onclick="addToDisplay('3')">3</button>
+            <button class="variable" onclick="addToDisplay('e')">e</button>
 
-.operator:hover, .equals:hover {
-    background-color: #5587d1;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-}
+            <button onclick="addToDisplay('0')">0</button>
+            <button onclick="addToDisplay('.')">.</button>
+            <button class="operator" onclick="addToDisplay('(')">(</button>
+            <button class="operator" onclick="addToDisplay(')')">)</button>
 
-.function {
-    background-color: #a4c5f9;
-    color: #ffffff;
-}
+            <button class="equals" onclick="calculateResult()">=</button>
+        </div>
+    </div>
 
-.function:hover {
-    background-color: #8fb0e0;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-}
-
-.variable {
-    background-color: #9cd4ff;
-    color: #ffffff;
-}
-
-.variable:hover {
-    background-color: #85badf;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-}
-
-.clear, .long-clear {
-    background-color: #ff9191;
-    color: #ffffff;
-}
-
-.clear:hover, .long-clear:hover {
-    background-color: #e07f7f;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-}
-
-.equals {
-    grid-column: span 2;
-}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.2/math.min.js"></script>
+    <script src="calculator.js"></script>
+</body>
+</html>

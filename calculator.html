@@ -13,8 +13,8 @@
         
         <div class="buttons-grid">
             <button class="clear" onclick="clearDisplay()">AC</button>
-            <button class="operator" onclick="addToDisplay('(')">(</button>
-            <button class="operator" onclick="addToDisplay(')')">)</button>
+            <button class="variable" onclick="addToDisplay('x')">x</button>
+            <button class="variable" onclick="addToDisplay('y')">y</button>
             <button class="operator" onclick="addToDisplay('/')">÷</button>
 
             <button class="function" onclick="addToDisplay('sin(')">sin</button>
@@ -22,24 +22,31 @@
             <button class="function" onclick="addToDisplay('tan(')">tan</button>
             <button class="operator" onclick="addToDisplay('*')">×</button>
 
+            <button class="function" onclick="addToDisplay('log(')">log</button>
+            <button class="function" onclick="addToDisplay('sqrt(')">sqrt</button>
+            <button class="operator" onclick="addToDisplay('^')">^</button>
+            <button class="operator" onclick="addToDisplay('-')">-</button>
+
             <button onclick="addToDisplay('7')">7</button>
             <button onclick="addToDisplay('8')">8</button>
             <button onclick="addToDisplay('9')">9</button>
-            <button class="operator" onclick="addToDisplay('-')">-</button>
+            <button class="operator" onclick="addToDisplay('+')">+</button>
 
             <button onclick="addToDisplay('4')">4</button>
             <button onclick="addToDisplay('5')">5</button>
             <button onclick="addToDisplay('6')">6</button>
-            <button class="operator" onclick="addToDisplay('+')">+</button>
+            <button class="variable" onclick="addToDisplay('pi')">π</button>
 
             <button onclick="addToDisplay('1')">1</button>
             <button onclick="addToDisplay('2')">2</button>
             <button onclick="addToDisplay('3')">3</button>
-            <button class="variable" onclick="addToDisplay('pi')">π</button>
+            <button class="variable" onclick="addToDisplay('e')">e</button>
 
             <button onclick="addToDisplay('0')">0</button>
             <button onclick="addToDisplay('.')">.</button>
-            <button class="variable" onclick="addToDisplay('e')">e</button>
+            <button class="operator" onclick="addToDisplay('(')">(</button>
+            <button class="operator" onclick="addToDisplay(')')">)</button>
+
             <button class="equals" onclick="calculateResult()">=</button>
         </div>
     </div>

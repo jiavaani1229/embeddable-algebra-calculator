@@ -36,7 +36,6 @@ function addToDisplay(value) {
 }
 
 function deleteLast() {
-    // Check if the current expression is not empty or is not '0'
     if (currentExpression.length > 0 && currentExpression !== '0') {
         currentExpression = currentExpression.slice(0, -1);
         if (currentExpression.length === 0) {
@@ -62,27 +61,44 @@ function calculateResult() {
         }
 
         let result;
+        const equalsIndex = expression.indexOf('=');
+
+        if (equalsIndex !== -1) {
+            // This is an equation. We'll use symbolic math to solve it.
+            const leftSide = expression.substring(0, equalsIndex);
+            const rightSide = expression.substring(equalsIndex + 1);
+
+            // Create a function that represents the equation's root: f(x) = 0
+            const equationFunction = math.parse(`${leftSide} - (${rightSide})`);
+
+            // Use the findRoot function to solve for x
+            const solution = math.findRoot(
+                x => equationFunction.evaluate({ x: x }),
+                0 // Start looking for the solution near x = 0
+            );
+
+            result = `x = ${math.round(solution, 4)}`; // Round to 4 decimal places
         
-        result = math.evaluate(expression);
+        } else {
+            // This is a standard expression without an equals sign.
+            // First, try a numerical evaluation.
+            try {
+                result = math.evaluate(expression);
+            } catch (numericalError) {
+                // If that fails, try a symbolic simplification.
+                const parsedExpression = math.parse(expression);
+                const simplifiedExpression = math.simplify(parsedExpression);
+                result = simplifiedExpression.toString();
+            }
+        }
         
         display.textContent = formatForDisplay(String(result));
         currentExpression = String(result);
         isResultDisplayed = true;
-    
-    } catch (e) {
-        try {
-            const parsedExpression = math.parse(currentExpression);
-            const simplifiedExpression = math.simplify(parsedExpression);
-            const result = simplifiedExpression.toString();
-            
-            display.textContent = formatForDisplay(result);
-            currentExpression = result;
-            isResultDisplayed = true;
 
-        } catch (symbolicError) {
-            display.textContent = 'Error';
-            currentExpression = '';
-            isResultDisplayed = false;
-        }
+    } catch (e) {
+        display.textContent = 'Error';
+        currentExpression = '';
+        isResultDisplayed = false;
     }
 }

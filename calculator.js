@@ -52,46 +52,63 @@ function clearDisplay() {
     isResultDisplayed = false;
 }
 
-function calculateResult() {
+function solveEquation() {
     try {
         const expression = currentExpression.trim();
+        const equalsIndex = expression.indexOf('=');
 
-        if (expression === '') {
+        if (equalsIndex === -1) {
+            display.textContent = 'No equation to solve';
+            isResultDisplayed = true;
             return;
         }
 
-        let result;
-        const equalsIndex = expression.indexOf('=');
+        const leftSide = expression.substring(0, equalsIndex);
+        const rightSide = expression.substring(equalsIndex + 1);
 
-        if (equalsIndex !== -1) {
-            // This is an equation. We'll use symbolic math to solve it.
-            const leftSide = expression.substring(0, equalsIndex);
-            const rightSide = expression.substring(equalsIndex + 1);
-
-            // Create a function that represents the equation's root: f(x) = 0
-            const equationFunction = math.parse(`${leftSide} - (${rightSide})`);
-
-            // Use the findRoot function to solve for x
-            const solution = math.findRoot(
-                x => equationFunction.evaluate({ x: x }),
-                0 // Start looking for the solution near x = 0
-            );
-
-            result = `x = ${math.round(solution, 4)}`; // Round to 4 decimal places
+        // This is a simple but effective way to handle simple linear equations.
+        // It uses math.js to evaluate the left and right sides.
+        const leftNode = math.parse(leftSide);
+        const rightNode = math.parse(rightSide);
         
-        } else {
-            // This is a standard expression without an equals sign.
-            // First, try a numerical evaluation.
-            try {
-                result = math.evaluate(expression);
-            } catch (numericalError) {
-                // If that fails, try a symbolic simplification.
-                const parsedExpression = math.parse(expression);
-                const simplifiedExpression = math.simplify(parsedExpression);
-                result = simplifiedExpression.toString();
-            }
+        // Find the variable to solve for (assuming it's 'x')
+        const variable = 'x'; 
+        
+        const solved = math.lusolve([[leftNode.evaluate({[variable]: 1})], [leftNode.evaluate({[variable]: 0})]], [[rightNode.evaluate()], [rightNode.evaluate()]]);
+        
+        // The result is in a matrix, we extract the first element.
+        const result = solved.get([0, 0]);
+
+        display.textContent = `x = ${math.round(result, 4)}`;
+        currentExpression = `x=${result}`;
+        isResultDisplayed = true;
+
+    } catch (e) {
+        display.textContent = 'Error';
+        currentExpression = '';
+        isResultDisplayed = false;
+    }
+}
+
+function calculateResult() {
+    try {
+        const expression = currentExpression.trim();
+        if (expression === '') {
+            return;
         }
         
+        let result;
+        
+        try {
+            // First, try numerical evaluation.
+            result = math.evaluate(expression);
+        } catch (numericalError) {
+            // If that fails, try symbolic simplification.
+            const parsedExpression = math.parse(expression);
+            const simplifiedExpression = math.simplify(parsedExpression);
+            result = simplifiedExpression.toString();
+        }
+
         display.textContent = formatForDisplay(String(result));
         currentExpression = String(result);
         isResultDisplayed = true;
